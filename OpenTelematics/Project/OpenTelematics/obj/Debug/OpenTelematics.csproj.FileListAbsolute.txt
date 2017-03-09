@@ -1,0 +1,8 @@
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\obj\Debug\OpenTelematics.csprojResolveAssemblyReference.cache
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\bin\Debug\OpenTelematics.dll
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\bin\Debug\OpenTelematics.pdb
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\bin\Debug\System.Device.Portable.dll
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\bin\Debug\System.Numerics.Vectors.dll
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\bin\Debug\System.Numerics.Vectors.xml
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\obj\Debug\OpenTelematics.dll
+C:\Projects\open-telematics\OpenTelematics\Project\OpenTelematics\obj\Debug\OpenTelematics.pdb

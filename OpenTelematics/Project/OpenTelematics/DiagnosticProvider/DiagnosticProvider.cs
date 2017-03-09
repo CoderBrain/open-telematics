@@ -3,27 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTelematics.Extensions;
+using System.Device.Location;
 
 namespace OpenTelematics.DiagnosticProvider
 {
     public abstract class DiagnosticProvider
     {
-        private Distance _Speed;
-        public Distance Speed
-        {
-            get { return _Speed; }
-            set
-            {
-                if (value.Equals(_Speed)) return;
-
-                _Speed = value;
-                if (OnSpeedChanged != null) OnSpeedChanged.Invoke(this, new SpeedChangedEventArgs(_Speed));
-            }
-        }
-
-        private Volume _Fuel;
-        public Volume Fuel
+        private double _Fuel;
+        public double Fuel
         {
             get { return _Fuel; }
             set
@@ -35,8 +22,8 @@ namespace OpenTelematics.DiagnosticProvider
             }
         }
 
-        private Volume _FuelCapacity;
-        public Volume FuelCapacity
+        private double _FuelCapacity;
+        public double FuelCapacity
         {
             get { return _FuelCapacity; }
             set
@@ -48,8 +35,8 @@ namespace OpenTelematics.DiagnosticProvider
             }
         }
 
-        private int _RPM;
-        public int RPM
+        private double _RPM;
+        public double RPM
         {
             get { return _RPM; }
             set
@@ -61,8 +48,8 @@ namespace OpenTelematics.DiagnosticProvider
             }
         }
 
-        private int _RPMMax;
-        public int RPMMax
+        private double _RPMMax;
+        public double RPMMax
         {
             get { return _RPMMax; }
             set
@@ -74,20 +61,31 @@ namespace OpenTelematics.DiagnosticProvider
             }
         }
 
+        private GeoCoordinate _Coordinate;
+        public GeoCoordinate Coordinate
+        {
+            get { return _Coordinate; }
+            set
+            {
+                _Coordinate = value;
+                if (OnCoordinateChanged != null) OnCoordinateChanged.Invoke(this, value);
+            }
+        }
+
+        public EventHandler<GeoCoordinate> OnCoordinateChanged;
         public EventHandler<FuelChangedEventArgs> OnFuelChanged;
-        public EventHandler<SpeedChangedEventArgs> OnSpeedChanged;
         public EventHandler<RPMChangedEventArgs> OnRPMChanged;
     }
 
     #region Events
 
-    public class RPMChangedEventArgs
+    public class NumberChangedEventArgs
     {
-        public int Current { get; private set; }
-        public int Maximum { get; private set; }
-        public decimal Percentage { get; private set; }
+        public double Current { get; private set; }
+        public double Maximum { get; private set; }
+        public double Percentage { get; private set; }
 
-        public RPMChangedEventArgs(int current, int maximum)
+        public NumberChangedEventArgs(double current, double maximum)
         {
             Current = current;
             Maximum = maximum;
@@ -96,25 +94,14 @@ namespace OpenTelematics.DiagnosticProvider
         }
     }
 
-    public class FuelChangedEventArgs
+    public class RPMChangedEventArgs : NumberChangedEventArgs
     {
-        public Volume Current { get; private set; }
-        public Volume Maximum { get; private set; }
-        public decimal Percentage { get; private set; }
-
-        public FuelChangedEventArgs(Volume current, Volume maximum)
-        {
-            Current = current;
-            Maximum = maximum;
-
-            Percentage = (current.Milelitres / maximum.Milelitres) * 100;
-        } 
+        public RPMChangedEventArgs(double current, double maximum) : base(current, maximum) { }
     }
 
-    public class SpeedChangedEventArgs
+    public class FuelChangedEventArgs : NumberChangedEventArgs
     {
-        public Distance Speed { get; private set; }
-        public SpeedChangedEventArgs(Distance speed) { Speed = speed; }
+        public FuelChangedEventArgs(double current, double maximum) : base(current, maximum) { }
     }
 
     #endregion
